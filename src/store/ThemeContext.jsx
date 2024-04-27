@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-const themeStorageKey = "theme";
+const THEME_STORAGE_KEY = "theme";
 
 export const ThemeContext = createContext(null);
 
 export default function ThemeContextProvider({ children }) {
-  const storedTheme = localStorage.getItem(themeStorageKey);
+  const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
   const [theme, setTheme] = useState(storedTheme || "light");
 
   function toggleTheme() {
@@ -12,7 +12,7 @@ export default function ThemeContextProvider({ children }) {
   }
 
   useEffect(() => {
-    localStorage.setItem(themeStorageKey, theme);
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
     const root = document.documentElement;
     root.setAttribute("class", theme);
   }, [theme]);
