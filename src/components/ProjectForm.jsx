@@ -1,35 +1,47 @@
+// hooks
 import { useState, useRef, useContext } from "react";
+
+// contexts
 import { ProjectsContext } from "@/store/ProjectsContext";
 
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-
+// components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+// other
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 export default function ProjectForm() {
   const [dueDate, setDueDate] = useState(null);
   const { projects, addNewProject, closeForm } = useContext(ProjectsContext);
-
-  console.log(projects);
 
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
 
   // functions
   function handleSavingNewProject() {
-    addNewProject(titleRef.current.value, descriptionRef.current.value, dueDate);
+    addNewProject(
+      titleRef.current.value,
+      descriptionRef.current.value,
+      dueDate,
+    );
     closeForm();
   }
 
+  console.log(projects);
   return (
-    <div className="grid gap-8">
-      <div id="buttons-container" className="flex gap-2 justify-end">
+    <div className="mx-auto grid w-[70%] gap-8">
+      <div id="buttons-container" className="flex justify-end gap-2">
         <Button variant="outline" onClick={handleSavingNewProject}>
           Save
         </Button>
@@ -39,7 +51,7 @@ export default function ProjectForm() {
       </div>
 
       <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="name" className="text-base uppercase font-bold">
+        <Label htmlFor="name" className="text-base font-bold uppercase">
           Title
         </Label>
         <Input
@@ -52,7 +64,7 @@ export default function ProjectForm() {
       </div>
 
       <div className="grid w-full gap-1.5 ">
-        <Label htmlFor="description" className="text-base uppercase font-bold">
+        <Label htmlFor="description" className="text-base font-bold uppercase">
           Description:
         </Label>
         <Textarea
@@ -64,7 +76,7 @@ export default function ProjectForm() {
       </div>
 
       <div className="grid w-full gap-1.5 ">
-        <Label htmlFor="dueDate" className="text-base uppercase font-bold">
+        <Label htmlFor="dueDate" className="text-base font-bold uppercase">
           Due Date:
         </Label>
         <Popover>
@@ -73,8 +85,8 @@ export default function ProjectForm() {
               id="dueDate"
               variant={"outline"}
               className={cn(
-                "justify-start text-left font-normal text-base",
-                !dueDate && "text-muted-foreground"
+                "justify-start text-left text-base font-normal",
+                !dueDate && "text-muted-foreground",
               )}
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
@@ -82,7 +94,12 @@ export default function ProjectForm() {
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
-            <Calendar mode="single" selected={dueDate} onSelect={setDueDate} initialFocus />
+            <Calendar
+              mode="single"
+              selected={dueDate}
+              onSelect={setDueDate}
+              initialFocus
+            />
           </PopoverContent>
         </Popover>
       </div>

@@ -7,7 +7,7 @@ export const ProjectsContext = createContext(null);
 export default function ProjectsContextProvider({ children }) {
   const savedProjects = JSON.parse(localStorage.getItem(PROJECTS_STORAGE_KEY));
   const [projects, setProjects] = useState(savedProjects || []);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectID, setSelectedProjectID] = useState(null);
   const [isAddingProject, setIsAddingProject] = useState(false);
 
   // projects state functions
@@ -31,16 +31,16 @@ export default function ProjectsContextProvider({ children }) {
   // selectedProject & isAddingProject functions
   function openForm() {
     setIsAddingProject(true);
-    setSelectedProject(null);
+    setSelectedProjectID(null);
   }
 
   function closeForm() {
     setIsAddingProject(false);
-    setSelectedProject(null);
+    setSelectedProjectID(null);
   }
 
   function selectProject(projectID) {
-    setSelectedProject(projectID);
+    setSelectedProjectID(projectID);
     setIsAddingProject(false);
   }
 
@@ -48,7 +48,7 @@ export default function ProjectsContextProvider({ children }) {
     projects,
     setProjects,
     addNewProject,
-    selectedProject,
+    selectedProjectID,
     isAddingProject,
     openForm,
     closeForm,
