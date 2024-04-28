@@ -14,7 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 export default function ProjectForm() {
   const [dueDate, setDueDate] = useState(null);
-  const { projects, addNewProject, setProjects } = useContext(ProjectsContext);
+  const { projects, addNewProject, closeForm } = useContext(ProjectsContext);
 
   console.log(projects);
 
@@ -22,17 +22,20 @@ export default function ProjectForm() {
   const descriptionRef = useRef(null);
 
   // functions
-  function handleAddingNewProject() {
+  function handleSavingNewProject() {
     addNewProject(titleRef.current.value, descriptionRef.current.value, dueDate);
+    closeForm();
   }
 
   return (
     <div className="grid gap-8">
       <div id="buttons-container" className="flex gap-2 justify-end">
-        <Button variant="outline" onClick={handleAddingNewProject}>
+        <Button variant="outline" onClick={handleSavingNewProject}>
           Save
         </Button>
-        <Button variant="destructive">Cancel</Button>
+        <Button variant="destructive" onClick={closeForm}>
+          Cancel
+        </Button>
       </div>
 
       <div className="grid w-full items-center gap-1.5">
