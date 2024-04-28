@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 export default function Sidebar() {
   const { projects, selectProject, openForm } = useContext(ProjectsContext);
 
+  console.log(projects);
   return (
     <aside className="hidden rounded-tr-xl bg-secondary px-10 pt-8 text-foreground md:block">
       <h1 className="mb-6 text-3xl font-bold uppercase text-primary">

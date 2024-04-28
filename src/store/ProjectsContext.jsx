@@ -22,6 +22,17 @@ export default function ProjectsContextProvider({ children }) {
     setProjects((currentPrjcts) => [...currentPrjcts, newPrjct]);
   }
 
+  function deleteProject(projectId) {
+    setProjects((currentProjects) => {
+      const projectsCopy = structuredClone(currentProjects);
+      const updatedProjects = projectsCopy.filter(
+        (project) => project.prjctId !== projectId,
+      );
+      return updatedProjects;
+    });
+    setSelectedProjectID(null);
+  }
+
   function saveProjectsInLocalStorage() {
     localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
   }
@@ -48,6 +59,7 @@ export default function ProjectsContextProvider({ children }) {
     projects,
     setProjects,
     addNewProject,
+    deleteProject,
     selectedProjectID,
     isAddingProject,
     openForm,
@@ -55,5 +67,9 @@ export default function ProjectsContextProvider({ children }) {
     selectProject,
   };
 
-  return <ProjectsContext.Provider value={value}>{children}</ProjectsContext.Provider>;
+  return (
+    <ProjectsContext.Provider value={value}>
+      {children}
+    </ProjectsContext.Provider>
+  );
 }
