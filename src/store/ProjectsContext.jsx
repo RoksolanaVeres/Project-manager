@@ -33,6 +33,29 @@ export default function ProjectsContextProvider({ children }) {
     setSelectedProjectID(null);
   }
 
+  function editProject(
+    editingProject,
+    editedTitle,
+    editedDescription,
+    editedDate,
+  ) {
+    let updatedProject = {
+      ...editingProject,
+      prjctTitle: editedTitle,
+      prjctDescription: editedDescription,
+      prjctDate: editedDate,
+    };
+    setProjects((currentProjects) => {
+      const updatedProjects = currentProjects.map((project) => {
+        if (project.prjctId === editingProject.prjctId) {
+          return updatedProject;
+        }
+        return project;
+      });
+      return updatedProjects;
+    });
+  }
+
   function saveProjectsInLocalStorage() {
     localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
   }
@@ -60,6 +83,7 @@ export default function ProjectsContextProvider({ children }) {
     setProjects,
     addNewProject,
     deleteProject,
+    editProject,
     selectedProjectID,
     isAddingProject,
     openForm,

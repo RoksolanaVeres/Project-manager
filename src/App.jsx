@@ -15,9 +15,9 @@ export default function App() {
   const { selectedProjectID, isAddingProject } = useContext(ProjectsContext);
 
   return (
-    <div className="min-h-dvh bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground">
       <Header />
-      <main className="flex min-h-dvh">
+      <main className="flex h-[calc(100vh-100px)]">
         <Sidebar />
         <div id="main-content" className="flex-1">
           <div id="prjct-info" className="py-8">

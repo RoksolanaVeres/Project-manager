@@ -12,7 +12,7 @@ export default function Sidebar() {
 
   console.log(projects);
   return (
-    <aside className="hidden rounded-tr-xl bg-secondary px-10 pt-8 text-foreground md:block">
+    <aside className="hidden w-[25%] rounded-tr-xl bg-secondary px-10 pt-8 text-foreground md:block">
       <h1 className="mb-6 text-3xl font-bold uppercase text-primary">
         Your Projects
       </h1>
@@ -28,7 +28,7 @@ export default function Sidebar() {
             >
               <Button
                 variant="outline"
-                className="flex w-full justify-start text-lg font-normal"
+                className="flex w-full justify-start border-none text-lg font-normal text-foreground/70 "
               >
                 {project.prjctTitle}
               </Button>

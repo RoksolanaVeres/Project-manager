@@ -15,7 +15,7 @@ export default function Header() {
     setMenuIsOpen(false);
   }
   return (
-    <header className="flex justify-between p-8 md:justify-end">
+    <header className="flex h-[100px] justify-between p-8 md:justify-end">
       {menuIsOpen && (
         <div className="md:hidden" onClick={handleCloseMenu}>
           Close
