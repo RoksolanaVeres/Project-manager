@@ -1,7 +1,7 @@
 // hooks
+import { useContext, useState } from "react";
 
 // contexts
-import { useContext, useState } from "react";
 import { ProjectsContext } from "@/store/ProjectsContext";
 
 // components

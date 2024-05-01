@@ -30,12 +30,16 @@ export default function ProjectForm() {
 
   // functions
   function handleSavingNewProject() {
-    addNewProject(
-      titleRef.current.value,
-      descriptionRef.current.value,
-      dueDate,
-    );
-    closeForm();
+    if (titleRef.current.value && descriptionRef.current.value && dueDate) {
+      addNewProject(
+        titleRef.current.value,
+        descriptionRef.current.value,
+        dueDate,
+      );
+      closeForm();
+    } else {
+      return;
+    }
   }
 
   console.log(projects);

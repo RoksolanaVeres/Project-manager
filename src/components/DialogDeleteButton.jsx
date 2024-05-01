@@ -26,8 +26,8 @@ export default function DialogDeleteButton({ prjctId }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md rounded-lg ">
         <DialogHeader>
-          <DialogTitle className="text-primary">
-            Are you absolutely sure you want to delete this project?
+          <DialogTitle className="mb-3 text-primary">
+            Delete this project?
           </DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your
