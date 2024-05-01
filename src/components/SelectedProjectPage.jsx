@@ -7,6 +7,7 @@ import { ProjectsContext } from "@/store/ProjectsContext";
 // components
 import { Button } from "./ui/button";
 import EditForm from "./EditForm";
+import DialogDeleteButton from "./DialogDeleteButton";
 
 //global functions
 function formatDate(date) {
@@ -19,17 +20,14 @@ function formatDate(date) {
 }
 
 export default function SelectedProjectPage() {
-  const { selectedProjectID, projects, deleteProject } =
-    useContext(ProjectsContext);
-
+  const { selectedProjectID, projects } = useContext(ProjectsContext);
   const [isEditing, setIsEditing] = useState(false);
 
   const selectedProject = projects.find(
     (project) => project.prjctId === selectedProjectID,
   );
 
-  const { prjctDate, prjctDescription, prjctId, prjctTasks, prjctTitle } =
-    selectedProject;
+  const { prjctDate, prjctDescription, prjctId, prjctTitle } = selectedProject;
 
   // functions
   function handleEditClick() {
@@ -59,13 +57,7 @@ export default function SelectedProjectPage() {
               >
                 Edit
               </Button>
-              <Button
-                onClick={() => deleteProject(prjctId)}
-                variant="destructive"
-                className="h-[30px] px-3 md:h-[40px]"
-              >
-                Delete
-              </Button>
+              <DialogDeleteButton prjctId={prjctId} />
             </div>
           </div>
           <p className="text-secondary-foreground/50">
