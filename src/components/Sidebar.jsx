@@ -1,4 +1,4 @@
-// hooks
+// hooks / functions
 import { useContext } from "react";
 
 // contexts

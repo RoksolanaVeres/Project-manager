@@ -22,7 +22,9 @@ export default function DialogDeleteButton({ prjctId }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="destructive">Delete</Button>
+        <Button variant="destructive" className="h-[30px] px-3 md:h-[40px]">
+          Delete
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md rounded-lg ">
         <DialogHeader>

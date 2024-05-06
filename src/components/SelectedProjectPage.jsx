@@ -1,5 +1,6 @@
-// hooks
+// hooks/ functions
 import { useContext, useState } from "react";
+import { formatDate } from "@/globalFunctions";
 
 // contexts
 import { ProjectsContext } from "@/store/ProjectsContext";
@@ -8,16 +9,7 @@ import { ProjectsContext } from "@/store/ProjectsContext";
 import { Button } from "./ui/button";
 import EditForm from "./EditForm";
 import DialogDeleteButton from "./DialogDeleteButton";
-
-//global functions
-function formatDate(date) {
-  const _date = new Date(date);
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  }).format(_date);
-}
+import ProjectTasks from "./ProjectTasks";
 
 export default function SelectedProjectPage() {
   const { selectedProjectID, projects } = useContext(ProjectsContext);
@@ -68,7 +60,7 @@ export default function SelectedProjectPage() {
             id="divider"
             className="my-10 h-1 w-full rounded-lg bg-secondary-foreground/10"
           ></div>
-          <h3 className="text-2xl font-bold">Tasks</h3>
+          <ProjectTasks selectedProject={selectedProject} />
         </div>
       )}
     </>
