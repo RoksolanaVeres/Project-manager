@@ -45,6 +45,7 @@ export default function ProjectsContextProvider({ children }) {
       prjctDescription: editedDescription,
       prjctDate: editedDate,
     };
+
     setProjects((currentProjects) => {
       const updatedProjects = currentProjects.map((project) => {
         if (project.prjctId === editingProject.prjctId) {
@@ -53,6 +54,45 @@ export default function ProjectsContextProvider({ children }) {
         return project;
       });
       return updatedProjects;
+    });
+  }
+
+  function addNewTaskToSelectedProject(selectedProjectId, newTask) {
+    setProjects((currentProjects) => {
+      return currentProjects.map((project) => {
+        if (project.prjctId === selectedProjectId) {
+          return {
+            ...project,
+            prjctTasks: [...project.prjctTasks, newTask],
+          };
+        } else {
+          return project;
+        }
+      });
+    });
+  }
+
+  function toggleTaskCompleteness(selectedProjectId, selectedTaskId) {
+    setProjects((currentProjects) => {
+      return currentProjects.map((project) => {
+        if (project.prjctId === selectedProjectId) {
+          return {
+            ...project,
+            prjctTasks: project.prjctTasks.map((task) => {
+              if (task.taskId === selectedTaskId) {
+                return {
+                  ...task,
+                  taskCompleted: !task.taskCompleted,
+                };
+              } else {
+                return task;
+              }
+            }),
+          };
+        } else {
+          return project;
+        }
+      });
     });
   }
 
@@ -89,6 +129,8 @@ export default function ProjectsContextProvider({ children }) {
     openForm,
     closeForm,
     selectProject,
+    addNewTaskToSelectedProject,
+    toggleTaskCompleteness,
   };
 
   return (

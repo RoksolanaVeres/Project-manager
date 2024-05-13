@@ -1,0 +1,14 @@
+Tasks to implement:
+
+1. Make active project stand out, save in LS
+2. Completed tasks styling
+3. edit task
+4. delete all tasks
+5. delete completed tasks
+6. progress bar
+7. sort by due date
+8. sort by progress
+9. reorder tasks
+10. Show errors when the form is not totally completed
+11. responsiveness
+12. favicon

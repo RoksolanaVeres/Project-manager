@@ -10,17 +10,21 @@ import { Input } from "./ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function ProjectTasks({ selectedProject }) {
-  const { projects, setProjects } = useContext(ProjectsContext);
-  const [newTask, setNewTask] = useState({});
+  const { addNewTaskToSelectedProject, projects } = useContext(ProjectsContext);
 
-  // console.log("selected project tasks", selectedProject.prjctTasks);
-  // console.log("project", projects);
+  console.log("all projects", projects);
+  console.log("selected project", selectedProject);
+  console.log("selected project tasks", selectedProject.prjctTasks);
+
+  const [newTask, setNewTask] = useState({
+    taskText: "",
+    taskId: crypto.randomUUID(),
+    taskCompleted: false,
+  });
 
   function handleInputChange(e) {
-    setNewTask({
-      taskText: e.target.value,
-      taskId: crypto.randomUUID(),
-      taskCompleted: false,
+    setNewTask((currentTask) => {
+      return { ...currentTask, taskText: e.target.value };
     });
   }
 
@@ -29,22 +33,12 @@ export default function ProjectTasks({ selectedProject }) {
     if (newTask.taskText === "") {
       return;
     }
+
     setNewTask((currentTask) => {
-      return { ...currentTask, taskText: "" };
+      return { ...currentTask, taskId: crypto.randomUUID(), taskText: "" };
     });
 
-    setProjects((currentProjects) => {
-      return currentProjects.map((project) => {
-        if (project.prjctId === selectedProject.prjctId) {
-          return {
-            ...project,
-            prjctTasks: [...project.prjctTasks, newTask],
-          };
-        } else {
-          return project;
-        }
-      });
-    });
+    addNewTaskToSelectedProject(selectedProject.prjctId, newTask);
   }
 
   return (
@@ -68,18 +62,38 @@ export default function ProjectTasks({ selectedProject }) {
       <ul>
         {selectedProject.prjctTasks.map((task) => {
           return (
-            <li key={task.taskId} className="mb-2 flex gap-4">
-              <Checkbox id={task.taskId} />
-              <label
-                htmlFor={task.taskId}
-                className="text-base font-medium leading-none"
-              >
-                {task.taskText}
-              </label>
-            </li>
+            <Task
+              key={task.taskId}
+              selectedProject={selectedProject}
+              task={task}
+            />
           );
         })}
       </ul>
     </div>
+  );
+}
+
+function Task({ task, selectedProject }) {
+  const { toggleTaskCompleteness } = useContext(ProjectsContext);
+
+  function handleCheckChange() {
+  toggleTaskCompleteness(selectedProject.prjctId, task.taskId);
+  }
+
+  return (
+    <li className="mb-2 flex gap-4">
+      <Checkbox
+        checked={task.taskCompleted}
+        id={task.taskId}
+        onClick={handleCheckChange}
+      />
+      <label
+        htmlFor={task.taskId}
+        className={`text-base font-medium leading-none ${task.taskCompleted ? "decoration-2 line-through decoration-primary" : undefined}`}
+      >
+        {task.taskText}
+      </label>
+    </li>
   );
 }
