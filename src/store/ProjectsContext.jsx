@@ -1,13 +1,18 @@
 import { createContext, useState, useEffect } from "react";
 
 const PROJECTS_STORAGE_KEY = "projects";
+const SELECTED_PROJECT_STORAGE_KEY = "current-project";
 
 export const ProjectsContext = createContext(null);
 
 export default function ProjectsContextProvider({ children }) {
   const savedProjects = JSON.parse(localStorage.getItem(PROJECTS_STORAGE_KEY));
+  const savedSelectedProject = JSON.parse(localStorage.getItem(SELECTED_PROJECT_STORAGE_KEY));
+
   const [projects, setProjects] = useState(savedProjects || []);
-  const [selectedProjectID, setSelectedProjectID] = useState(null);
+  const [selectedProjectID, setSelectedProjectID] = useState(
+    savedSelectedProject || null,
+  );
   const [isAddingProject, setIsAddingProject] = useState(false);
 
   // projects state functions
@@ -96,11 +101,20 @@ export default function ProjectsContextProvider({ children }) {
     });
   }
 
+  // local storage functions & effects
   function saveProjectsInLocalStorage() {
     localStorage.setItem(PROJECTS_STORAGE_KEY, JSON.stringify(projects));
   }
 
+  function saveSelectedProjectInLocalStorage() {
+     localStorage.setItem(
+       SELECTED_PROJECT_STORAGE_KEY,
+       JSON.stringify(selectedProjectID),
+     );
+  }
+
   useEffect(saveProjectsInLocalStorage, [projects]);
+  useEffect(saveSelectedProjectInLocalStorage, [selectedProjectID]);
 
   // selectedProject & isAddingProject functions
   function openForm() {
@@ -118,6 +132,11 @@ export default function ProjectsContextProvider({ children }) {
     setIsAddingProject(false);
   }
 
+  function unselectProject() {
+    setSelectedProjectID(null);
+    setIsAddingProject(false);
+  }
+
   const value = {
     projects,
     setProjects,
@@ -129,6 +148,7 @@ export default function ProjectsContextProvider({ children }) {
     openForm,
     closeForm,
     selectProject,
+    unselectProject,
     addNewTaskToSelectedProject,
     toggleTaskCompleteness,
   };

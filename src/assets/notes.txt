@@ -1,7 +1,5 @@
 Tasks to implement:
 
-1. Make active project stand out, save in LS
-2. Completed tasks styling
 3. edit task
 4. delete all tasks
 5. delete completed tasks
