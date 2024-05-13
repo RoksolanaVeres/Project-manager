@@ -8,13 +8,19 @@ import { ProjectsContext } from "@/store/ProjectsContext";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
 
 export default function ProjectTasks({ selectedProject }) {
   const { addNewTaskToSelectedProject, projects } = useContext(ProjectsContext);
+  const { prjctTasks } = selectedProject;
 
-  console.log("all projects", projects);
-  console.log("selected project", selectedProject);
-  console.log("selected project tasks", selectedProject.prjctTasks);
+  const allTasksNum = prjctTasks.length;
+  const completedTasksNum = prjctTasks.filter((task) => task.taskCompleted).length
+  const progressValue = (completedTasksNum * 100) / allTasksNum;
+  
+  // console.log("all projects", projects);
+  // console.log("selected project", selectedProject);
+  // console.log("selected project tasks", prjctTasks);
 
   const [newTask, setNewTask] = useState({
     taskText: "",
@@ -42,7 +48,7 @@ export default function ProjectTasks({ selectedProject }) {
   }
 
   return (
-    <div>
+    <div className="grid gap-10">
       <form
         onSubmit={handleTaskFormSubmit}
         className="mb-6 grid w-full items-center gap-1.5 lg:w-1/2"
@@ -70,6 +76,7 @@ export default function ProjectTasks({ selectedProject }) {
           );
         })}
       </ul>
+      <Progress className="h-2" value={progressValue} />
     </div>
   );
 }
